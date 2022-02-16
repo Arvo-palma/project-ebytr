@@ -1,9 +1,9 @@
 const { MOVED_TEMPORARILY } = require('http-status-codes');
-const { user } = require('../database/models');
+const { task } = require('../database/models');
 
 const create = async (userId, description) => {
   try {
-    const newTask = await user.create({ userId, description, status: 'Pendente' });
+    const newTask = await task.create({ userId, description, status: 'Pendente' });
 
     if (!newTask) {
       return false;
@@ -17,7 +17,7 @@ const create = async (userId, description) => {
 
 const getAll = async () => {
   try {
-    const allTasks = await user.getAll();
+    const allTasks = await task.getAll();
 
     if (!allTasks) return false;
 
@@ -31,7 +31,7 @@ const update =  async (taskId, taskInfo) => {
   try {
     const { userId, description, status } = taskInfo;
 
-    const updatedTask = await user.update(
+    const updatedTask = await task.update(
       {
         userId,
         description,
@@ -52,9 +52,12 @@ const update =  async (taskId, taskInfo) => {
 
 const deleteTaskService = async (id) => {
   try {
-    const deletedTask = await user.delete({ where: id })
+    const deletedTask = await task.delete({ where: id });
+
+    return deletedTask;
   } catch (error) {
     console.log(error);
+    return false;
   }
 };
 

@@ -56,7 +56,7 @@ const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const deletedUser = await adminServices.delete(userId);
+    const deletedUser = await adminServices.deleteUserService(userId);
 
     if (!deletedUser) {
       return res.status(StatusCodes.BAD_REQUEST)
