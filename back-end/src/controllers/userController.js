@@ -1,11 +1,11 @@
 const { StatusCodes } = require('http-status-codes');
 const userServices = require('../services/userServices');
 
-const createTask = (req, res) => {
+const createTask = async (req, res) => {
   try {
     const { userId, description } = req.body;
 
-    const newTask = userServices.create(userId, description);
+    const newTask = await userServices.create(userId, description);
   
     if (!newTask) {
       return res.status(StatusCodes.BAD_REQUEST)
@@ -20,11 +20,11 @@ const createTask = (req, res) => {
   }
 };
 
-const getAllTasks = (req, res) => {
+const getAllTasks = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const userTasks = userServices.getAll(userId);
+    const userTasks = await userServices.getAll(userId);
 
     return res.status(StatusCodes.OK).json(userTasks)
   } catch (error) {
@@ -32,13 +32,13 @@ const getAllTasks = (req, res) => {
   }
 };
 
-const updateTask = (req, res) => {
+const updateTask = async (req, res) => {
   try {
     const taskId = req.params.id;
     const { userId, description, status } = req.body;
     const taskInfo = { userId, description, status };
 
-    const updatedTask = userServices.update(taskId, taskInfo);
+    const updatedTask = await userServices.update(taskId, taskInfo);
 
     if (!updatedTask) {
       return res.status(StatusCodes.BAD_REQUEST)
@@ -53,11 +53,11 @@ const updateTask = (req, res) => {
   }
 };
 
-const deleteTask = (req, res) => {
+const deleteTask = async (req, res) => {
   try {
     const taskId = req.params.id;
 
-    const deletedTask = userServices.delete(taskId);
+    const deletedTask = await userServices.deleteTaskService(taskId);
 
     if (!deletedTask) {
       return res.status(StatusCodes.BAD_REQUEST)

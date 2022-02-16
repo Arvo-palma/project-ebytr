@@ -1,12 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
 const adminServices = require('../services/adminServices');
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { name, password, email, role } = req.body;
     const userInfo = { name, password, email, role };
 
-    const newUser = adminServices.create(userInfo);
+    const newUser = await adminServices.create(userInfo);
   
     if (!newUser) {
       return res.status(StatusCodes.BAD_REQUEST)
@@ -21,9 +21,9 @@ const createUser = (req, res) => {
   }
 };
 
-const getAllUsers = (_req, res) => {
+const getAllUsers = async (_req, res) => {
   try {
-    const allUsers = adminServices.getAll();
+    const allUsers = await adminServices.getAll();
 
     return res.status(StatusCodes.OK).json(allUsers)
   } catch (error) {
@@ -31,13 +31,13 @@ const getAllUsers = (_req, res) => {
   }
 };
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
     const { name, password, email, role } = req.body;
     const userInfo = { name, password, email, role };
 
-    const updatedUser = adminServices.update(userId, userInfo);
+    const updatedUser = await adminServices.update(userId, userInfo);
 
     if (!updatedUser) {
       return res.status(StatusCodes.BAD_REQUEST)
@@ -52,11 +52,11 @@ const updateUser = (req, res) => {
   }
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const deletedUser = adminServices.delete(userId);
+    const deletedUser = await adminServices.delete(userId);
 
     if (!deletedUser) {
       return res.status(StatusCodes.BAD_REQUEST)
