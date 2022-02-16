@@ -3,17 +3,17 @@ module.exports = {
     await queryInterface.bulkInsert('tasks',
       [
         {
-          user_id: 2,
+          userId: 2,
           description: 'Revisar contatos dos fornecedores',
           status: 'Pendente',
         },
         {
-          user_id: 2,
+          userId: 2,
           description: 'Varrer a calçada',
           status: 'Executando',
         },
         {
-          user_id: 2,
+          userId: 2,
           description: 'Fazer café',
           status: 'Concluída',
         },
