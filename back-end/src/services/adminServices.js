@@ -17,7 +17,7 @@ const create = async (userInfo) => {
 
 const getAll = async () => {
   try {
-    const allUsers = await user.getAll();
+    const allUsers = await user.findAll();
 
     if (!allUsers) return false;
 
@@ -52,7 +52,7 @@ const update = async (userId, userInfo) => {
 
 const deleteUserService = async (id) => {
   try {
-    const deletedUser = await user.delete({ where: id });
+    const deletedUser = await user.destroy({ where: { id } });
 
     return deletedUser;
   } catch (error) {

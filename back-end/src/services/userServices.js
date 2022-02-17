@@ -3,7 +3,13 @@ const { task } = require('../database/models');
 
 const create = async (userId, description) => {
   try {
-    const newTask = await task.create({ userId, description, status: 'Pendente' });
+    const newTask = await task.create({
+      userId,
+      description,
+      status: 'Pendente',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
     if (!newTask) {
       return false;
@@ -15,9 +21,9 @@ const create = async (userId, description) => {
   }
 };
 
-const getAll = async () => {
+const getAll = async (userId) => {
   try {
-    const allTasks = await task.getAll();
+    const allTasks = await task.findAll({ where: { userId } });
 
     if (!allTasks) return false;
 
@@ -35,7 +41,8 @@ const update =  async (taskId, taskInfo) => {
       {
         userId,
         description,
-        status
+        status,
+        updatedAt: new Date(),
       },
       {
         where: {
@@ -52,7 +59,7 @@ const update =  async (taskId, taskInfo) => {
 
 const deleteTaskService = async (id) => {
   try {
-    const deletedTask = await task.delete({ where: id });
+    const deletedTask = await task.destroy({ where: { id } });
 
     return deletedTask;
   } catch (error) {

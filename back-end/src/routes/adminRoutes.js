@@ -3,9 +3,9 @@ const adminController = require('../controllers/adminController');
 
 const adminRoutes = express.Router();
 
-adminRoutes.get('/users', userController.getAllUsers);
-adminRoutes.post('/newuser', userController.createUser);
-adminRoutes.put('/user/:id', userController.updateUser);
-adminRoutes.delete('/user/:id', userController.deleteUser);
+adminRoutes.get('/users', adminController.getAllUsers);
+adminRoutes.post('/newuser', adminController.createUser);
+adminRoutes.put('/user/:id', adminController.updateUser);
+adminRoutes.delete('/user/:id', adminController.deleteUser);
 
 module.exports = adminRoutes;

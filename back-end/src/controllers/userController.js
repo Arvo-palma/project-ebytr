@@ -26,6 +26,12 @@ const getAllTasks = async (req, res) => {
 
     const userTasks = await userServices.getAll(userId);
 
+    if (!userTasks) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: 'Internal problem'
+      });
+    }
+
     return res.status(StatusCodes.OK).json(userTasks)
   } catch (error) {
     console.log(error);
