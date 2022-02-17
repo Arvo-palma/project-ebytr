@@ -1,5 +1,20 @@
 const { user } = require('../database/models');
 
+const findUserByEmail = async (email) => {
+  try {
+    const searchedUser = user.findOne({ where: { email }});
+
+    if (!searchedUser) {
+      return false;
+    }
+
+    return searchedUser
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 const create = async (userInfo) => {
   try {
     const { name, password, email, role } = userInfo;
@@ -63,6 +78,7 @@ const deleteUserService = async (id) => {
 
 
 module.exports = {
+  findUserByEmail,
   create,
   getAll,
   update,

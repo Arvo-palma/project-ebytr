@@ -1,6 +1,20 @@
 const { StatusCodes } = require('http-status-codes');
 const adminServices = require('../services/adminServices');
 
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const { dataValues: { id, name, email: userEmail, role } } = await adminServices
+      .findUserByEmail(email);
+
+    return res.status(StatusCodes.OK)
+      .json({ id, name, email: userEmail, role });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const { name, password, email, role } = req.body;
@@ -72,6 +86,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  loginUser,
   createUser,
   getAllUsers,
   updateUser,
